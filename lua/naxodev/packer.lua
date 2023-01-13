@@ -67,4 +67,6 @@ return require('packer').startup(function(use)
             'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua' },
     }
 
+    use 'tpope/vim-surround' -- "cs"' to change surrounding quotes, etc
+
 end)
