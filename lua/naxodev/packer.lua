@@ -69,4 +69,6 @@ return require('packer').startup(function(use)
 
     use 'tpope/vim-surround' -- "cs"' to change surrounding quotes, etc
 
+    use 'kyazdani42/nvim-web-devicons' -- Icons for filetypes
+
 end)
