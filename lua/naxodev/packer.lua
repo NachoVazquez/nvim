@@ -58,6 +58,8 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' },
             -- Snippet Collection (Optional)
             { 'rafamadriz/friendly-snippets' },
+            { 'jose-elias-alvarez/null-ls.nvim' },
+            { 'MunifTanjim/prettier.nvim' }
         },
     }
 
@@ -72,5 +74,18 @@ return require('packer').startup(function(use)
     use 'nvim-tree/nvim-web-devicons' -- Icons for filetypes
 
     use 'onsails/lspkind-nvim' -- Prettier icons for completion items
+
+    use 'mhinz/vim-startify'
+
+    use 'windwp/nvim-ts-autotag'
+    use 'windwp/nvim-autopairs'
+
+    use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            require('lspsaga').setup({})
+        end,
+    })
 
 end)

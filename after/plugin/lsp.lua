@@ -14,8 +14,8 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -56,7 +56,14 @@ local servers = {
   -- gopls = {},
   -- pyright = {},
   rust_analyzer = {},
-  tsserver = {},
+  tsserver = {
+    filetypes = {
+      'typescript',
+      'typescriptreact',
+      'typescript.tsx',
+    },
+    cmd = { 'typescript-language-server', '--stdio' },
+  },
   html = {},
   cssls = {},
   tailwindcss = {},
