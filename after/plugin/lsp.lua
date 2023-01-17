@@ -14,6 +14,37 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
+
+  nmap("<leader>pv", vim.cmd.Ex)
+
+  -- window management
+  nmap("<leader>sv", "<C-w>v") -- split window vertically
+  nmap("<leader>sh", "<C-w>s") -- split window horizontally
+  nmap("<leader>se", "<C-w>=") -- make split windows equal width & height
+  nmap("<leader>sx", ":close<CR>") -- close current split window
+
+  -- vim-maximizer
+  nmap("<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximization
+
+  -- restart lsp server (not on youtube nvim video)
+  nmap("<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary:
+
+  nmap("Q", "<nop>")
+  nmap("<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
+  nmap("<C-k>", "<cmd>cnext<CR>zz")
+  nmap("<C-j>", "<cmd>cprev<CR>zz")
+  nmap("<leader>k", "<cmd>lnext<CR>zz")
+  nmap("<leader>j", "<cmd>lprev<CR>zz")
+
+  nmap("<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+  nmap("<leader>x", "<cmd>!chmod +x %<CR>")
+
+  nmap("<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+  nmap("<leader>x", "<cmd>!chmod +x %<CR>")
+
+
+
   -- Lsp finder find the symbol definition implement reference
   -- if there is no implement it will hide
   -- when you use action in finder like open vsplit then you can
