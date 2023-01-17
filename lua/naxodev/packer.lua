@@ -68,6 +68,8 @@ return require('packer').startup(function(use)
         requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua' },
     }
+    use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
+
 
     use 'tpope/vim-surround' -- "cs"' to change surrounding quotes, etc
 
@@ -87,5 +89,7 @@ return require('packer').startup(function(use)
             require('lspsaga').setup({})
         end,
     })
+
+    use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
 end)

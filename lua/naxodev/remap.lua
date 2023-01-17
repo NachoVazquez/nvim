@@ -19,7 +19,7 @@ inoremap("kj", "<Esc>")
 
 -- Remap for dealing with word wrap
 exprnnoremap('k', "v:count == 0 ? 'gk' : 'k'")
-exprnnoremap( 'j', "v:count == 0 ? 'gj' : 'j'")
+exprnnoremap('j', "v:count == 0 ? 'gj' : 'j'")
 
 -- Moves selected lines up and down
 vnoremap("J", ":m '>+1<CR>gv=gv")
@@ -51,7 +51,7 @@ nnoremap("<C-j>", "<cmd>cprev<CR>zz")
 nnoremap("<leader>k", "<cmd>lnext<CR>zz")
 nnoremap("<leader>j", "<cmd>lprev<CR>zz")
 
-nnoremap("<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+nnoremap("<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 nnoremap("<leader>x", "<cmd>!chmod +x %<CR>")
 
 -- Diagnostic keymaps
@@ -59,3 +59,15 @@ nnoremap('[d', vim.diagnostic.goto_prev)
 nnoremap(']d', vim.diagnostic.goto_next)
 -- nnoremap('<leader>e', vim.diagnostic.open_float)
 -- nnoremap('<leader>q', vim.diagnostic.setloclist)
+
+-- window management
+nnoremap("<leader>sv", "<C-w>v") -- split window vertically
+nnoremap("<leader>sh", "<C-w>s") -- split window horizontally
+nnoremap("<leader>se", "<C-w>=") -- make split windows equal width & height
+nnoremap("<leader>sx", ":close<CR>") -- close current split window
+
+-- vim-maximizer
+nnoremap("<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximization
+
+-- restart lsp server (not on youtube nvim video)
+nnoremap("<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary:

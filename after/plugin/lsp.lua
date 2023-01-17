@@ -1,5 +1,5 @@
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -14,20 +14,84 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
+  -- Lsp finder find the symbol definition implement reference
+  -- if there is no implement it will hide
+  -- when you use action in finder like open vsplit then you can
+  -- use <C-t> to jump back
+  nmap("gh", "<cmd>Lspsaga lsp_finder<CR>")
+
+  -- Code action
+  vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+
+  -- Rename
+  nmap("<leader>rn", "<cmd>Lspsaga rename<CR>")
+
+  -- Peek Definition
+  -- you can edit the definition file in this flaotwindow
+  -- also support open/vsplit/etc operation check definition_action_keys
+  -- support tagstack C-t jump back
+  nmap("gp", "<cmd>Lspsaga peek_definition<CR>")
+
+  -- Go to Definition
+  nmap("gd", "<cmd>Lspsaga goto_definition<CR>")
+
+  -- Show line diagnostics you can pass arugment ++unfocus to make
+  -- show_line_diagnsotic float window unfocus
+  nmap("<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+
+  -- Show cursor diagnostic
+  -- also like show_line_diagnostics  support pass ++unfocus
+  nmap("<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+
+  -- Show buffer diagnostic
+  nmap("<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+
+  -- Diagnsotic jump can use `<c-o>` to jump back
+  nmap("[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+  nmap("]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+
+  -- Diagnostic jump with filter like Only jump to error
+  nmap("[E", function()
+    require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  end)
+  nmap("]E", function()
+    require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+  end)
+
+  -- Toggle Outline
+  nmap("<leader>o", "<cmd>Lspsaga outline<CR>")
+
+  -- Hover Doc
+  -- if there has no hover will have a notify no information available
+  -- to disable it just Lspsaga hover_doc ++quiet
+  nmap("K", "<cmd>Lspsaga hover_doc<CR>")
+
+  -- Callhierarchy
+  nmap("<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+  nmap("<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+
+  -- Float terminal
+  vim.keymap.set({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")
+
+  if client.name == "tsserver" then
+    vim.keymap.set("n", "<leader>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
+    vim.keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports (not in youtube nvim video)
+    vim.keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables (not in youtube nvim video)
+  end
+
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  nmap("<leader>pv", vim.cmd.Ex, 'Excape')
 
   -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
@@ -58,11 +122,8 @@ local servers = {
   rust_analyzer = {},
   tsserver = {
     filetypes = {
-      'typescript',
-      'typescriptreact',
-      'typescript.tsx',
+      'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx',
     },
-    cmd = { 'typescript-language-server', '--stdio' },
   },
   html = {},
   cssls = {},
@@ -122,6 +183,8 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+    ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
