@@ -14,8 +14,22 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
+  local map = function(mode, keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
+  end
 
   nmap("<leader>pv", vim.cmd.Ex)
+
+  -- next greatest remap ever : asbjornHaland
+  map({ "n", "v" }, "<leader>y", [["+y]])
+  nmap("<leader>Y", [["+Y]])
+
+  map({ "n", "v" }, "<leader>d", [["_d]])
+
 
   -- window management
   nmap("<leader>sv", "<C-w>v") -- split window vertically
