@@ -91,5 +91,6 @@ return require('packer').startup(function(use)
     })
 
     use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
+    use 'ThePrimeagen/git-worktree.nvim'
 
 end)

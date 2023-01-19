@@ -124,6 +124,8 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables (not in youtube nvim video)
   end
 
+  vim.keymap.set("i", "<C-Enter>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
