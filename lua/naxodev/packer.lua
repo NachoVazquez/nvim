@@ -93,4 +93,31 @@ return require('packer').startup(function(use)
     use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
     use 'ThePrimeagen/git-worktree.nvim'
 
+    use {
+        "ThePrimeagen/refactoring.nvim",
+        requires = {
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-treesitter/nvim-treesitter" }
+        }
+    }
+
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
+
+    use {
+        "folke/zen-mode.nvim",
+        config = function()
+            require("zen-mode").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end
+    }
+
+    use 'rbong/vim-flog'
+
+
 end)

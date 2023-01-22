@@ -1,5 +1,6 @@
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'git_worktree')
 
 -- import telescope actions safely
 local actions_setup, actions = pcall(require, "telescope.actions")
