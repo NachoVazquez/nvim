@@ -119,5 +119,6 @@ return require('packer').startup(function(use)
 
     use 'rbong/vim-flog'
 
+    use "nvim-lua/plenary.nvim"
 
 end)
