@@ -121,4 +121,14 @@ return require('packer').startup(function(use)
 
     use "nvim-lua/plenary.nvim"
 
+    use "tpope/vim-abolish"
+
+
+    use {
+        "windwp/nvim-spectre",
+        requires = {
+            { "nvim-lua/plenary.nvim" },
+        }
+    }
+
 end)

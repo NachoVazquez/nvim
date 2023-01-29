@@ -70,6 +70,8 @@ vim.keymap.set('n', '<leader>gc', git_worktree.create_git_worktree, { desc = '[G
 WorkTree.on_tree_change(function(op, metadata)
 	if op == WorkTree.Operations.Create and is_roost(metadata.path) then
 		print("Create from " .. metadata.prev_path .. " to " .. metadata.path)
+
+		setup_roost(metadata.path)
 	end
 
 	if op == WorkTree.Operations.Switch and is_roost(metadata.path) then

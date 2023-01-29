@@ -71,3 +71,4 @@ nnoremap("<leader>sm", ":MaximizerToggle<CR>") -- toggle split window maximizati
 
 -- restart lsp server (not on youtube nvim video)
 nnoremap("<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary:
+nnoremap("<leader>S", "<cmd>lua require('spectre').open()<CR>")
