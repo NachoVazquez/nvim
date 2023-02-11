@@ -6,59 +6,82 @@ WorkTree.setup({
 local function setup_roost(wt_path)
 	print("Setting up roost at " .. wt_path)
 
-	Job:new({
+
+	local copy_envs_pigeon_job = Job:new({
 		command = 'cp',
 		args = { '../develop/apps/pigeon/.env', './apps/pigeon/' },
 		cwd = wt_path,
-		on_exit = function(j, return_val)
+		on_success = function(j, return_val)
 			print("Copied .env file to Pigeon")
 		end,
-	}):start()
+	})
 
-	Job:new({
+	local copy_envs_parrot_job = Job:new({
 		command = 'cp',
 		args = { '../develop/apps/parrot/.env', './apps/parrot/' },
 		cwd = wt_path,
-		on_exit = function(j, return_val)
+		on_success = function(j, return_val)
 			print("Copied .env file to Parrot")
 		end,
-	}):start()
+	})
 
-	Job:new({
+	local copy_envs_eagle_job = Job:new({
 		command = 'cp',
 		args = { '../develop/apps/eagle/.env', './apps/eagle/' },
 		cwd = wt_path,
-		on_exit = function(j, return_val)
+		on_success = function(j, return_val)
 			print("Copied .env file to Eagle")
 		end,
-	}):start()
+	})
 
-	Job:new({
+	local install_dependencies_job = Job:new({
 		command = 'make',
 		args = { 'install' },
 		cwd = wt_path,
 		on_exit = function(j, return_val)
 			print("Installed dependencies")
 		end,
-	}):start()
+	})
 
-	Job:new({
-		command = 'yarn',
-		args = { 'ui', 'build' },
-		cwd = wt_path,
-		on_exit = function(j, return_val)
-			print("Built UI")
-		end,
-	}):start()
-
-	Job:new({
+	local build_common_job = Job:new({
 		command = 'yarn',
 		args = { 'common' },
 		cwd = wt_path,
-		on_exit = function(j, return_val)
+		on_success = function(j, return_val)
 			print("Built common")
 		end,
-	}):start()
+	})
+
+	local build_ui_job = Job:new({
+		command = 'yarn',
+		args = { 'ui', 'build' },
+		cwd = wt_path,
+		on_success = function(j, return_val)
+			print("Built UI")
+		end,
+	})
+
+
+	-- copy_envs_pigeon_job.and_then(copy_envs_parrot_job)
+	-- copy_envs_parrot_job.and_then(copy_envs_eagle_job)
+	-- copy_envs_eagle_job.and_then(install_dependencies_job)
+	-- install_dependencies_job.and_then(build_common_job)
+	-- build_common_job.and_then(build_ui_job)
+
+	-- copy_envs_pigeon_job:sync()
+	-- copy_envs_parrot_job:wait()
+	-- copy_envs_eagle_job:wait()
+	-- install_dependencies_job:wait()
+	-- build_common_job:wait()
+	-- build_ui_job:wait()
+	--
+	copy_envs_pigeon_job:start()
+	copy_envs_parrot_job:start()
+	copy_envs_eagle_job:start()
+	install_dependencies_job:start()
+	build_common_job:start()
+	build_ui_job:start()
+
 end
 
 -- Loads the git_worktree extension if installed

@@ -186,9 +186,33 @@ local servers = {
 
 -- Setup neovim lua configuration
 require('neodev').setup()
---
+
+require('lspconfig')['emmet_ls'].setup({
+  filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+  init_options = {
+    html = {
+      options = {
+        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        ["bem.enabled"] = true,
+      },
+    },
+  }
+})
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true
+}
+local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+  require('lspconfig')[ls].setup({
+    capabilities = capabilities
+    -- you can add other fields for setting up lsp server in this table
+  })
+end
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Setup mason so it can manage external tooling
