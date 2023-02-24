@@ -43,23 +43,15 @@ local function setup_roost(wt_path)
 		end,
 	})
 
-	local build_common_job = Job:new({
+	local build_libs_job = Job:new({
 		command = 'yarn',
-		args = { 'common' },
+		args = { 'lib' },
 		cwd = wt_path,
 		on_success = function(j, return_val)
-			print("Built common")
+			print("Built lib")
 		end,
 	})
 
-	local build_ui_job = Job:new({
-		command = 'yarn',
-		args = { 'ui', 'build' },
-		cwd = wt_path,
-		on_success = function(j, return_val)
-			print("Built UI")
-		end,
-	})
 
 
 	-- copy_envs_pigeon_job.and_then(copy_envs_parrot_job)
@@ -79,9 +71,7 @@ local function setup_roost(wt_path)
 	copy_envs_parrot_job:start()
 	copy_envs_eagle_job:start()
 	install_dependencies_job:start()
-	build_common_job:start()
-	build_ui_job:start()
-
+	build_libs_job:start()
 end
 
 -- Loads the git_worktree extension if installed

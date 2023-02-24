@@ -141,4 +141,10 @@ return require('packer').startup(function(use)
         requires = "MunifTanjim/nui.nvim",
     })
 
+    use {
+        'Equilibris/nx.nvim',
+        requires = {
+            'nvim-telescope/telescope.nvim',
+        }
+    }
 end)

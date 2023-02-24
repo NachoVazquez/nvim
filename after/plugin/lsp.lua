@@ -155,6 +155,10 @@ local on_attach = function(client, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 
   nmap('<leader>f', vim.lsp.buf.format, '[F]ormat')
+
+  -- Nx Keymaps
+  vim.keymap.set('n', '<leader>nx', require('nx.read-configs').read_nx_root, { desc = "Open Nx actions finder" })
+  vim.keymap.set('n', '<leader>ng', require('nx.generators').generators, { desc = "Open Nx actions finder" })
 end
 
 -- Enable the following language servers
@@ -175,29 +179,11 @@ local servers = {
   html = {},
   cssls = {},
   tailwindcss = {},
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
 }
 
 -- Setup neovim lua configuration
 require('neodev').setup()
 
-require('lspconfig')['emmet_ls'].setup({
-  filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
-  init_options = {
-    html = {
-      options = {
-        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-        ["bem.enabled"] = true,
-      },
-    },
-  }
-})
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
@@ -211,7 +197,7 @@ for _, ls in ipairs(language_servers) do
     -- you can add other fields for setting up lsp server in this table
   })
 end
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -252,7 +238,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
     ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
@@ -273,8 +259,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
