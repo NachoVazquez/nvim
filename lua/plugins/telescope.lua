@@ -81,13 +81,6 @@ return {
       desc = "[S]earch [R]eferences",
     },
     {
-      "<leader>ss",
-      function()
-        require("session-lens").search_session()
-      end,
-      desc = "[S]earch [S]essions",
-    },
-    {
       "<leader>st",
       "<cmd>TodoTelescope<CR>",
       desc = "[S]earch [S]essions",
