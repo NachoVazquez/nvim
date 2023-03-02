@@ -4,7 +4,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "rmagatti/session-lens",
-      "nvim-telescope/telescope-fzf-native.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "arch -arm64 make" },
       "BurntSushi/ripgrep",
     },
     lazy = false,
@@ -128,9 +128,9 @@ return {
     config = function(_, opts)
       local telescope = require("telescope")
       telescope.setup(opts)
+      telescope.load_extension("fzf")
       telescope.load_extension("session-lens")
       telescope.load_extension("refactoring")
-      -- telescope.load_extension("fzf")
       telescope.load_extension("git_worktree")
     end,
   },

@@ -27,7 +27,6 @@ return {
   "nvim-tree/nvim-web-devicons",
   "tpope/vim-sleuth",
   "tpope/vim-abolish",
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
 
   -- Useful status updates for LSP
   { "j-hui/fidget.nvim", opts = { window = { border = "rounded", blend = 0 } } },
