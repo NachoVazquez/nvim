@@ -140,6 +140,7 @@ return {
         teal_ls = {},
         vimls = {},
         tailwindcss = {},
+        intelephense = {},
       },
     },
     setup = {
