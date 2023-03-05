@@ -4,10 +4,13 @@ return {
   {
     "zbirenbaum/copilot.lua",
     enabled = true,
-    event = "VeryLazy",
-    config = true,
+    cmd = "Copilot",
+    event = "InsertEnter",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
   },
-
   -- Package Info
   {
     "vuki656/package-info.nvim",
@@ -81,10 +84,16 @@ return {
     dependencies = {
       "hrsh7th/cmp-emoji",
       { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
+      {
+        "zbirenbaum/copilot-cmp",
+        opts = {},
+      },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       -- original LazyVim kind icon formatter
+      local cmp = require("cmp")
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
       local format_kinds = opts.formatting.format
       opts.formatting.format = function(entry, item)
         format_kinds(entry, item) -- add icons
@@ -101,4 +110,11 @@ return {
     end,
   },
   { "jose-elias-alvarez/typescript.nvim" },
+  {
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  },
 }

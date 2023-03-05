@@ -83,7 +83,7 @@ return {
     {
       "<leader>st",
       "<cmd>TodoTelescope<CR>",
-      desc = "[S]earch [S]essions",
+      desc = "[S]earch [T]odos",
     },
     {
       "<C-P>",
