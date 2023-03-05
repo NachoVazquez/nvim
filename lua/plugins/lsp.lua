@@ -69,7 +69,7 @@ return {
         dockerls = {},
         tsserver = {},
         svelte = {},
-        -- eslint = {},
+        eslint = {},
         html = {},
         -- gopls = {},
         marksman = {},
@@ -145,6 +145,11 @@ return {
     setup = {
       tsserver = function(_, opts)
         require("lazyvim.util").on_attach(function(client, buffer)
+          if client.name == "eslint" then
+            client.server_capabilities.documentFormattingProvider = true
+          elseif client.name == "tsserver" then
+            client.server_capabilities.documentFormattingProvider = false
+          end
           if client.name == "tsserver" then
             -- stylua: ignore
             vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", { buffer = buffer, desc = "Organize Imports" })
