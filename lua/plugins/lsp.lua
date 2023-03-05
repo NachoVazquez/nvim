@@ -36,7 +36,28 @@ return {
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
+    init = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] = {
+        "<leader>f",
+        require("lazyvim.plugins.lsp.format").format,
+        desc = "Format Document",
+        has = "documentFormatting",
+      }
+      keys[#keys + 1] = {
+        "<leader>f",
+        require("lazyvim.plugins.lsp.format").format,
+        desc = "Format Range",
+        mode = "v",
+        has = "documentRangeFormatting",
+      }
+    end,
     opts = {
+      setup = {
+        clangd = function(_, opts)
+          opts.capabilities.offsetEncoding = { "utf-16" }
+        end,
+      },
       ---@type lspconfig.options
       servers = {
         astro = {},
@@ -138,17 +159,6 @@ return {
         require("typescript").setup({ server = opts })
         return true
       end,
-    },
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      setup = {
-        clangd = function(_, opts)
-          opts.capabilities.offsetEncoding = { "utf-16" }
-        end,
-      },
     },
   },
 
