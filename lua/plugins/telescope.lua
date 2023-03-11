@@ -93,6 +93,10 @@ return {
       end,
       desc = "Git Files",
     },
+    {
+      "<leader>gc",
+      false,
+    },
   },
   opts = {
     defaults = {

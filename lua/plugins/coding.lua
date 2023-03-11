@@ -14,7 +14,7 @@ return {
   -- Package Info
   {
     "vuki656/package-info.nvim",
-    requires = "MunifTanjim/nui.nvim",
+    dependencies = "MunifTanjim/nui.nvim",
     keys = {
       {
         "<leader>nt",
@@ -40,6 +40,15 @@ return {
           require("package-info").change_version()
         end,
         desc = "Change version package info",
+        silent = true,
+        noremap = true,
+      },
+      {
+        "<leader>ns",
+        function()
+          require("package-info").show({ force = true })
+        end,
+        desc = "Show Package Info",
         silent = true,
         noremap = true,
       },
