@@ -7,3 +7,5 @@ vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "[S]plit [E]qually" })
 vim.keymap.set("n", "<leader>sx", ":close<CR>", { desc = "[S]plit [E]qually" })
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Explore" })
+
+vim.keymap.set("i", "kk", "<ESC>", { desc = "Exit insert mode" })
