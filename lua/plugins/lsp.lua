@@ -51,13 +51,22 @@ return {
         mode = "v",
         has = "documentRangeFormatting",
       }
+      if require("lazyvim.util").has("inc-rename.nvim") then
+        keys[#keys + 1] = {
+          "<leader>rn",
+          function()
+            require("inc_rename")
+            return ":IncRename " .. vim.fn.expand("<cword>")
+          end,
+          expr = true,
+          desc = "Rename",
+          has = "rename",
+        }
+      else
+        keys[#keys + 1] = { "<leader>rn", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
+      end
     end,
     opts = {
-      setup = {
-        clangd = function(_, opts)
-          opts.capabilities.offsetEncoding = { "utf-16" }
-        end,
-      },
       ---@type lspconfig.options
       servers = {
         astro = {},
@@ -143,64 +152,51 @@ return {
         intelephense = {},
       },
     },
-    setup = {
-      tsserver = function(_, opts)
-        require("lazyvim.util").on_attach(function(client, buffer)
-          if client.name == "eslint" then
-            client.server_capabilities.documentFormattingProvider = true
-          elseif client.name == "tsserver" then
-            client.server_capabilities.documentFormattingProvider = false
-          end
-          if client.name == "tsserver" then
-            -- stylua: ignore
-            vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", { buffer = buffer, desc = "Organize Imports" })
-            vim.keymap.set(
-              "n",
-              "<leader>cR",
-              "<cmd>TypescriptRenameFile<CR>",
-              { desc = "Rename File", buffer = buffer }
-            )
-          end
-        end)
-        require("typescript").setup({ server = opts })
-        return true
-      end,
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      setup = {
+        clangd = function(_, opts)
+          opts.capabilities.offsetEncoding = { "utf-16" }
+        end,
+      },
     },
   },
 
   -- null-ls
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      local nls = require("null-ls")
-      nls.setup({
-        debounce = 150,
-        save_after_format = false,
-        sources = {
-          -- nls.builtins.formatting.prettierd,
-          nls.builtins.formatting.stylua,
-          nls.builtins.formatting.fish_indent,
-          -- nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
-          -- nls.builtins.formatting.eslint_d,
-          -- nls.builtins.diagnostics.shellcheck,
-          nls.builtins.formatting.shfmt,
-          nls.builtins.diagnostics.markdownlint,
-          -- nls.builtins.diagnostics.luacheck,
-          nls.builtins.formatting.prettierd.with({
-            filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
-          }),
-          nls.builtins.diagnostics.selene.with({
-            condition = function(utils)
-              return utils.root_has_file({ "selene.toml" })
-            end,
-          }),
-          -- nls.builtins.code_actions.gitsigns,
-          nls.builtins.formatting.isort,
-          nls.builtins.formatting.black,
-          nls.builtins.diagnostics.flake8,
-        },
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", ".git"),
-      })
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   config = function()
+  --     local nls = require("null-ls")
+  --     nls.setup({
+  --       debounce = 150,
+  --       save_after_format = false,
+  --       sources = {
+  --         -- nls.builtins.formatting.prettierd,
+  --         nls.builtins.formatting.stylua,
+  --         -- nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
+  --         nls.builtins.formatting.eslint_d,
+  --         -- nls.builtins.diagnostics.shellcheck,
+  --         nls.builtins.formatting.shfmt,
+  --         nls.builtins.diagnostics.markdownlint,
+  --         -- nls.builtins.diagnostics.luacheck,
+  --         nls.builtins.formatting.prettierd.with({
+  --           filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
+  --         }),
+  --         nls.builtins.diagnostics.selene.with({
+  --           condition = function(utils)
+  --             return utils.root_has_file({ "selene.toml" })
+  --           end,
+  --         }),
+  --         -- nls.builtins.code_actions.gitsigns,
+  --         nls.builtins.formatting.isort,
+  --         nls.builtins.formatting.black,
+  --         nls.builtins.diagnostics.flake8,
+  --       },
+  --       root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", ".git"),
+  --     })
+  --   end,
+  -- },
 }
