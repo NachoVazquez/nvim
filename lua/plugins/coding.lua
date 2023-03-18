@@ -139,4 +139,106 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
   },
+  {
+    "nvim-neotest/neotest",
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-python",
+      "nvim-neotest/neotest-plenary",
+      "nvim-neotest/neotest-go",
+      "haydenmeade/neotest-jest",
+      "nvim-neotest/neotest-vim-test",
+    },
+    keys = {
+      {
+        "<leader>ta",
+        function()
+          require("neotest").run.attach()
+        end,
+        desc = "[T]est [A]ttach",
+      },
+      {
+        "<leader>tf",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Run File",
+      },
+      {
+        "<leader>tF",
+        function()
+          require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
+        end,
+        desc = "Debug File",
+      },
+      {
+        "<leader>tl",
+        function()
+          require("neotest").run.run_last()
+        end,
+        desc = "Run Last",
+      },
+      {
+        "<leader>tL",
+        function()
+          require("neotest").run.run_last({ strategy = "dap" })
+        end,
+        desc = "Debug Last",
+      },
+      {
+        "<leader>tn",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run Nearest",
+      },
+      {
+        "<leader>tN",
+        function()
+          require("neotest").run.run({ strategy = "dap" })
+        end,
+        desc = "Debug Nearest",
+      },
+      {
+        "<leader>to",
+        function()
+          require("neotest").output.open({ enter = true })
+        end,
+        desc = "Output",
+      },
+      {
+        "<leader>tS",
+        function()
+          require("neotest").run.stop()
+        end,
+        desc = "Stop",
+      },
+      {
+        "<leader>ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Summary",
+      },
+    },
+    config = function()
+      require("neotest").setup({
+        adapters = {
+          require("neotest-python")({
+            dap = { justMyCode = false },
+            runner = "unittest",
+          }),
+          require("neotest-jest"),
+          require("neotest-go"),
+          require("neotest-plenary"),
+          require("neotest-vim-test")({
+            ignore_file_types = { "python", "vim", "lua" },
+          }),
+        },
+      })
+    end,
+  },
 }
