@@ -83,6 +83,13 @@ return {
       servers = {
         tailwindcss = {},
         astro = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
       },
     },
   },
@@ -240,5 +247,22 @@ return {
         },
       })
     end,
+  },
+  {
+    "danymat/neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+    opts = {
+      snippet_engine = "luasnip",
+    },
+    keys = {
+      {
+        "<leader>g*",
+        function()
+          require("neogen").generate()
+        end,
+        desc = "Generate",
+      },
+    },
   },
 }
