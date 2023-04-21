@@ -67,4 +67,16 @@ return {
   {
     "tpope/vim-abolish",
   },
+  {
+    "windwp/nvim-spectre",
+    keys = {
+      {
+        "<leader>sX",
+        function()
+          require("spectre").open()
+        end,
+        desc = "Replace in files (Spectre)",
+      },
+    },
+  },
 }
