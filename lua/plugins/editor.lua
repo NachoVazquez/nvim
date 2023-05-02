@@ -25,12 +25,6 @@ return {
       },
     },
   },
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      background_colour = "#000000",
-    },
-  },
   "folke/twilight.nvim",
   {
     "folke/zen-mode.nvim",
