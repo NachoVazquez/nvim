@@ -1,16 +1,16 @@
 return {
 
   -- copilot
-  {
-    "zbirenbaum/copilot.lua",
-    enabled = true,
-    cmd = "Copilot",
-    event = "InsertEnter",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   enabled = true,
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   opts = {
+  --     suggestion = { enabled = false },
+  --     panel = { enabled = false },
+  --   },
+  -- },
   -- Package Info
   {
     "vuki656/package-info.nvim",
@@ -81,7 +81,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        tailwindcss = {},
         astro = {},
         yamlls = {
           settings = {
@@ -99,7 +98,6 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
       {
         "zbirenbaum/copilot-cmp",
         opts = {},
@@ -110,11 +108,6 @@ return {
       -- original LazyVim kind icon formatter
       local cmp = require("cmp")
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
-      local format_kinds = opts.formatting.format
-      opts.formatting.format = function(entry, item)
-        format_kinds(entry, item) -- add icons
-        return require("tailwindcss-colorizer-cmp").formatter(entry, item)
-      end
       opts.mapping = cmp.mapping.preset.insert({
         ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -160,6 +153,8 @@ return {
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-go",
       "haydenmeade/neotest-jest",
+      "marilari88/neotest-vitest",
+      "thenbe/neotest-playwright",
       "nvim-neotest/neotest-vim-test",
     },
     keys = {
@@ -242,6 +237,13 @@ return {
             runner = "unittest",
           }),
           require("neotest-jest"),
+          require("neotest-vitest"),
+          require("neotest-playwright").adapter({
+            options = {
+              persist_project_selection = true,
+              enable_dynamic_test_discovery = true,
+            },
+          }),
           require("neotest-go"),
           require("neotest-plenary"),
           require("neotest-vim-test")({

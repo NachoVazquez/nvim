@@ -40,6 +40,21 @@ return {
         noremap = true,
         expr = true,
       },
+      {
+        "<leader>oj",
+        "<cmd>ObsidianToday<CR>",
+        desc = "Obsidian Journal Today",
+      },
+      {
+        "<leader>os",
+        "<cmd>ObsidianSearch<CR>",
+        desc = "Obsidian Search",
+      },
+      {
+        "<leader>ol",
+        "<cmd>ObsidianLinkNew<CR>",
+        desc = "Obsidian Link New",
+      },
     },
   },
 }

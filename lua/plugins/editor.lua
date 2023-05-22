@@ -6,9 +6,7 @@ return {
     opts = {
       filetypes = { "*", "!lazy" },
       buftype = { "*", "!prompt", "!nofile" },
-      user_default_options = {
-        tailwind = true,
-      },
+      user_default_options = {},
     },
   },
   {
@@ -72,5 +70,11 @@ return {
         desc = "Replace in files (Spectre)",
       },
     },
+  },
+  {
+    "mbbill/undotree",
+  },
+  {
+    "karb94/neoscroll.nvim",
   },
 }
