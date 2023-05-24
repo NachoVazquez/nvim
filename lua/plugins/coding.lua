@@ -1,16 +1,5 @@
 return {
 
-  -- copilot
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   enabled = true,
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   opts = {
-  --     suggestion = { enabled = false },
-  --     panel = { enabled = false },
-  --   },
-  -- },
   -- Package Info
   {
     "vuki656/package-info.nvim",
@@ -98,16 +87,11 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      {
-        "zbirenbaum/copilot-cmp",
-        opts = {},
-      },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       -- original LazyVim kind icon formatter
       local cmp = require("cmp")
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
       opts.mapping = cmp.mapping.preset.insert({
         ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
