@@ -8,35 +8,33 @@ return {
       {
         "<leader>gw",
         function()
-          require('telescope').extensions.git_worktree.git_worktrees()
+          require("telescope").extensions.git_worktree.git_worktrees()
         end,
-        desc = '[G]it [W]orktrees'
+        desc = "[G]it [W]orktrees",
       },
       {
         "<leader>gc",
         function()
-          require('telescope').extensions.git_worktree.create_git_worktree()
+          require("telescope").extensions.git_worktree.create_git_worktree()
         end,
-        desc = '[G]it WorkTree [C]reate'
-      }
+        desc = "[G]it WorkTree [C]reate",
+      },
     },
     config = function()
-      local Job = require 'plenary.job'
+      local Job = require("plenary.job")
       local WorkTree = require("git-worktree")
-      WorkTree.setup({
-      })
+      WorkTree.setup({})
 
       local function is_roost(wt_path)
-        return string.find(wt_path, 'roost')
+        return string.find(wt_path, "roost")
       end
 
       local function setup_roost(wt_path)
         print("Setting up roost at " .. wt_path)
 
-
         local copy_envs_pigeon_job = Job:new({
-          command = 'cp',
-          args = { '../develop/apps/pigeon/.env', './apps/pigeon/' },
+          command = "cp",
+          args = { "../develop/apps/pigeon/.env", "./apps/pigeon/" },
           cwd = wt_path,
           on_success = function(j, return_val)
             print("Copied .env file to Pigeon")
@@ -44,8 +42,8 @@ return {
         })
 
         local copy_envs_parrot_job = Job:new({
-          command = 'cp',
-          args = { '../develop/apps/parrot/.env', './apps/parrot/' },
+          command = "cp",
+          args = { "../develop/apps/parrot/.env", "./apps/parrot/" },
           cwd = wt_path,
           on_success = function(j, return_val)
             print("Copied .env file to Parrot")
@@ -53,33 +51,31 @@ return {
         })
 
         local copy_envs_eagle_job = Job:new({
-          command = 'cp',
-          args = { '../develop/apps/eagle/.env', './apps/eagle/' },
+          command = "cp",
+          args = { "../develop/apps/eagle/.env", "./apps/eagle/" },
           cwd = wt_path,
           on_success = function(j, return_val)
             print("Copied .env file to Eagle")
           end,
         })
 
+        local copy_envs_zapier_job = Job:new({
+          command = "cp",
+          args = { "../develop/apps/zapier/.env", "./apps/zapier/" },
+          cwd = wt_path,
+          on_success = function(j, return_val)
+            print("Copied .env file to Zapier")
+          end,
+        })
+
         local install_dependencies_job = Job:new({
-          command = 'make',
-          args = { 'install' },
+          command = "yarn",
+          args = { "install" },
           cwd = wt_path,
           on_exit = function(j, return_val)
             print("Installed dependencies")
           end,
         })
-
-        local build_libs_job = Job:new({
-          command = 'yarn',
-          args = { 'lib' },
-          cwd = wt_path,
-          on_success = function(j, return_val)
-            print("Built lib")
-          end,
-        })
-
-
 
         -- copy_envs_pigeon_job.and_then(copy_envs_parrot_job)
         -- copy_envs_parrot_job.and_then(copy_envs_eagle_job)
@@ -98,7 +94,6 @@ return {
         copy_envs_parrot_job:start()
         copy_envs_eagle_job:start()
         install_dependencies_job:start()
-        build_libs_job:start()
       end
 
       WorkTree.on_tree_change(function(op, metadata)
@@ -114,6 +109,6 @@ return {
           setup_roost(metadata.path)
         end
       end)
-    end
-  }
+    end,
+  },
 }
