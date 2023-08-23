@@ -50,13 +50,13 @@ return {
     opts = {
       servers = {
         astro = {},
-        yamlls = {
-          settings = {
-            yaml = {
-              keyOrdering = false,
-            },
-          },
-        },
+        -- yamlls = {
+        --   settings = {
+        --     yaml = {
+        --       keyOrdering = false,
+        --     },
+        --   },
+        -- },
       },
     },
   },

@@ -78,7 +78,6 @@ return {
         clangd = {},
         -- denols = false,
         cssls = {},
-        dockerls = {},
         tsserver = {},
         svelte = {},
         eslint = {},
@@ -86,19 +85,19 @@ return {
         -- gopls = {},
         marksman = {},
         pyright = {},
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              procMacro = { enable = true },
-              cargo = { allFeatures = true },
-              checkOnSave = {
-                command = "clippy",
-                extraArgs = { "--no-deps" },
-              },
-            },
-          },
-        },
-        yamlls = {},
+        -- rust_analyzer = {
+        --   settings = {
+        --     ["rust-analyzer"] = {
+        --       procMacro = { enable = true },
+        --       cargo = { allFeatures = true },
+        --       checkOnSave = {
+        --         command = "clippy",
+        --         extraArgs = { "--no-deps" },
+        --       },
+        --     },
+        --   },
+        -- },
+        -- yamlls = {},
         lua_ls = {
           -- cmd = { "/home/folke/projects/lua-language-server/bin/lua-language-server" },
           single_file_support = true,
