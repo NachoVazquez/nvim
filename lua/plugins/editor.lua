@@ -84,4 +84,19 @@ return {
       require("image_preview").setup()
     end,
   },
+  {
+    "folke/flash.nvim",
+    keys = function()
+      return {
+        {
+          "S",
+          mode = { "n", "x", "o" },
+          function()
+            require("flash").jump()
+          end,
+          desc = "Flash",
+        },
+      }
+    end,
+  },
 }
