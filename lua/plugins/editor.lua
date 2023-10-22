@@ -60,7 +60,7 @@ return {
     "tpope/vim-abolish",
   },
   {
-    "windwp/nvim-spectre",
+    "nvim-pack/nvim-spectre",
     keys = {
       {
         "<leader>sX",
@@ -86,17 +86,18 @@ return {
   },
   {
     "folke/flash.nvim",
-    keys = function()
-      return {
-        {
-          "S",
-          mode = { "n", "x", "o" },
-          function()
-            require("flash").jump()
-          end,
-          desc = "Flash",
-        },
-      }
-    end,
+    enabled = false,
+    -- keys = function()
+    --   return {
+    --     {
+    --       "S",
+    --       mode = { "n", "x", "o" },
+    --       function()
+    --         require("flash").jump()
+    --       end,
+    --       desc = "Flash",
+    --     },
+    --   }
+    -- end,
   },
 }

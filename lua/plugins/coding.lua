@@ -126,7 +126,6 @@ return {
   {
     "f-person/git-blame.nvim",
   },
-
   -- Database
   {
     "tpope/vim-dadbod",
