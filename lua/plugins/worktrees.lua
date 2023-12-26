@@ -25,51 +25,29 @@ return {
       local WorkTree = require("git-worktree")
       WorkTree.setup({})
 
-      local function is_roost(wt_path)
-        return string.find(wt_path, "roost")
+      local function is_js_repo(path)
+        return vim.fn.filereadable(path .. "/package.json") == 1
       end
 
-      local function setup_roost(wt_path)
-        print("Setting up roost at " .. wt_path)
+      local function get_package_manager(wt_path)
+        local package_manager = "pnpm"
+        if vim.fn.filereadable(wt_path .. "/package-lock.json") == 1 then
+          package_manager = "npm"
+        end
+        if vim.fn.filereadable(wt_path .. "/yarn.lock") == 1 then
+          package_manager = "yarn"
+        end
+        if vim.fn.filereadable(wt_path .. "/pnpm-lock.yaml") == 1 then
+          package_manager = "pnpm"
+        end
+        return package_manager
+      end
 
-        local copy_envs_pigeon_job = Job:new({
-          command = "cp",
-          args = { "../develop/apps/pigeon/.env", "./apps/pigeon/" },
-          cwd = wt_path,
-          on_success = function(j, return_val)
-            print("Copied .env file to Pigeon")
-          end,
-        })
-
-        local copy_envs_parrot_job = Job:new({
-          command = "cp",
-          args = { "../develop/apps/parrot/.env", "./apps/parrot/" },
-          cwd = wt_path,
-          on_success = function(j, return_val)
-            print("Copied .env file to Parrot")
-          end,
-        })
-
-        local copy_envs_eagle_job = Job:new({
-          command = "cp",
-          args = { "../develop/apps/eagle/.env", "./apps/eagle/" },
-          cwd = wt_path,
-          on_success = function(j, return_val)
-            print("Copied .env file to Eagle")
-          end,
-        })
-
-        local copy_envs_zapier_job = Job:new({
-          command = "cp",
-          args = { "../develop/apps/zapier/.env", "./apps/zapier/" },
-          cwd = wt_path,
-          on_success = function(j, return_val)
-            print("Copied .env file to Zapier")
-          end,
-        })
+      local function install_dependencies(wt_path)
+        print("Installing dependencies")
 
         local install_dependencies_job = Job:new({
-          command = "yarn",
+          command = get_package_manager(wt_path),
           args = { "install" },
           cwd = wt_path,
           on_exit = function(j, return_val)
@@ -77,36 +55,20 @@ return {
           end,
         })
 
-        -- copy_envs_pigeon_job.and_then(copy_envs_parrot_job)
-        -- copy_envs_parrot_job.and_then(copy_envs_eagle_job)
-        -- copy_envs_eagle_job.and_then(install_dependencies_job)
-        -- install_dependencies_job.and_then(build_common_job)
-        -- build_common_job.and_then(build_ui_job)
-
-        -- copy_envs_pigeon_job:sync()
-        -- copy_envs_parrot_job:wait()
-        -- copy_envs_eagle_job:wait()
-        -- install_dependencies_job:wait()
-        -- build_common_job:wait()
-        -- build_ui_job:wait()
-        --
-        copy_envs_pigeon_job:start()
-        copy_envs_parrot_job:start()
-        copy_envs_eagle_job:start()
         install_dependencies_job:start()
       end
 
       WorkTree.on_tree_change(function(op, metadata)
-        if op == WorkTree.Operations.Create and is_roost(metadata.path) then
+        if op == WorkTree.Operations.Create and is_js_repo(metadata.path) then
           print("Create from " .. metadata.prev_path .. " to " .. metadata.path)
 
-          setup_roost(metadata.path)
+          install_dependencies(metadata.path)
         end
 
-        if op == WorkTree.Operations.Switch and is_roost(metadata.path) then
+        if op == WorkTree.Operations.Switch and is_js_repo(metadata.path) then
           print("Switch from " .. metadata.prev_path .. " to " .. metadata.path)
 
-          setup_roost(metadata.path)
+          install_dependencies(metadata.path)
         end
       end)
     end,
