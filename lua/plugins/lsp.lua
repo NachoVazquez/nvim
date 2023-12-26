@@ -25,7 +25,7 @@ return {
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
 
-      keys[#keys + 1] = { "<leader>f", vim.lsp.buf.format, desc = "Format", has = "format" }
+      keys[#keys + 1] = { "<leader>f", require("conform").format, desc = "Format", has = "format" }
 
       if require("lazyvim.util").has("inc-rename.nvim") then
         keys[#keys + 1] = {
