@@ -1,12 +1,5 @@
 return {
   "nvim-telescope/telescope.nvim",
-  cmd = "Telescope",
-  version = false, -- telescope did only one release, so use HEAD for now
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "arch -arm64 make" },
-    "BurntSushi/ripgrep",
-  },
   keys = {
     {
       "<leader><space>",
@@ -119,11 +112,4 @@ return {
       },
     },
   },
-  config = function(_, opts)
-    local telescope = require("telescope")
-    telescope.setup(opts)
-    telescope.load_extension("refactoring")
-    telescope.load_extension("fzf")
-    telescope.load_extension("git_worktree")
-  end,
 }

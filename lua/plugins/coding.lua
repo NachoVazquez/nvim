@@ -92,7 +92,7 @@ return {
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(
           opts.ensure_installed,
-          { "typescript", "tsx", "php", "astro", "toml", "markdown", "markdown_inline", "ruby", "sql", "rust", "regex" }
+          { "typescript", "tsx", "php", "astro", "markdown", "markdown_inline", "ruby", "sql", "rust", "regex" }
         )
       end
     end,
@@ -106,26 +106,26 @@ return {
     end,
   },
 
-  {
-    "danymat/neogen",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
-    opts = {
-      snippet_engine = "luasnip",
-    },
-    keys = {
-      {
-        "<leader>g*",
-        function()
-          require("neogen").generate()
-        end,
-        desc = "Generate",
-      },
-    },
-  },
-  {
-    "f-person/git-blame.nvim",
-  },
+  -- {
+  --   "danymat/neogen",
+  --   dependencies = "nvim-treesitter/nvim-treesitter",
+  --   config = true,
+  --   opts = {
+  --     snippet_engine = "luasnip",
+  --   },
+  --   keys = {
+  --     {
+  --       "<leader>g*",
+  --       function()
+  --         require("neogen").generate()
+  --       end,
+  --       desc = "Generate",
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "f-person/git-blame.nvim",
+  -- },
   -- Database
   {
     "tpope/vim-dadbod",
