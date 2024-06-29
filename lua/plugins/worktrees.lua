@@ -1,6 +1,6 @@
 return {
   {
-    "ThePrimeagen/git-worktree.nvim",
+    "naxodev/git-worktree.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },

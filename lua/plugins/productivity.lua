@@ -1,19 +1,4 @@
 return {
-  -- neorg
-  -- {
-  --   "nvim-neorg/neorg",
-  --   ft = "norg",
-  --   opts = {
-  --     load = {
-  --       ["core.defaults"] = {},
-  --       ["core.norg.concealer"] = {},
-  --       ["core.norg.completion"] = {
-  --         config = { engine = "nvim-cmp" },
-  --       },
-  --       ["core.integrations.nvim-cmp"] = {},
-  --     },
-  --   },
-  -- },
   -- Obsidian
   {
     "epwalsh/obsidian.nvim",
@@ -54,6 +39,11 @@ return {
         "<leader>ol",
         "<cmd>ObsidianLinkNew<CR>",
         desc = "Obsidian Link New",
+      },
+      {
+        "<leader>ot",
+        "<cmd>ObsidianTags<CR>",
+        desc = "Search Obsidian Tags",
       },
     },
   },

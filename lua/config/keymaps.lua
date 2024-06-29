@@ -15,3 +15,12 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("n", "<cr>", "ciw")
 vim.keymap.set("n", "<bs>", "diw")
+
+vim.keymap.set("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "Navigate left" })
+vim.keymap.set("n", "<C-w>j", "<cmd> TmuxNavigateDown<CR>", { desc = "Navigate down" })
+vim.keymap.set("n", "<C-w>k", "<cmd> TmuxNavigateUp<CR>", { desc = "Navigate up" })
+vim.keymap.set("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Navigate right" })
+
+vim.keymap.set({ "n", "v" }, "<leader>f", function()
+  LazyVim.format({ force = true })
+end, { desc = "Format" })
