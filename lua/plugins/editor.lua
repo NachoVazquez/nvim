@@ -60,18 +60,6 @@ return {
     "tpope/vim-abolish",
   },
   {
-    "nvim-pack/nvim-spectre",
-    keys = {
-      {
-        "<leader>sX",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace in files (Spectre)",
-      },
-    },
-  },
-  {
     "mbbill/undotree",
   },
   {
