@@ -58,17 +58,28 @@ return {
         install_dependencies_job:start()
       end
 
+      local function create_env_file(wt_path)
+        local env_example_path = wt_path .. "/.env.example"
+        local env_path = wt_path .. "/.env"
+        if vim.fn.filereadable(env_example_path) == 1 then
+          local env_example_content = vim.fn.readfile(env_example_path)
+          vim.fn.writefile(env_example_content, env_path)
+        end
+      end
+
       WorkTree.on_tree_change(function(op, metadata)
         if op == WorkTree.Operations.Create and is_js_repo(metadata.path) then
           print("Create from " .. metadata.prev_path .. " to " .. metadata.path)
 
           install_dependencies(metadata.path)
+          create_env_file(metadata.path)
         end
 
         if op == WorkTree.Operations.Switch and is_js_repo(metadata.path) then
           print("Switch from " .. metadata.prev_path .. " to " .. metadata.path)
 
           install_dependencies(metadata.path)
+          create_env_file(metadata.path)
         end
       end)
     end,
