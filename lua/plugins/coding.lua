@@ -1,65 +1,4 @@
 return {
-  -- Package Info
-  {
-    "vuki656/package-info.nvim",
-    dependencies = "MunifTanjim/nui.nvim",
-    keys = {
-      {
-        "<leader>nt",
-        function()
-          require("package-info").toggle()
-        end,
-        desc = "Toggle package info",
-        silent = true,
-        noremap = true,
-      },
-      {
-        "<leader>nu",
-        function()
-          require("package-info").update()
-        end,
-        desc = "Update package info",
-        silent = true,
-        noremap = true,
-      },
-      {
-        "<leader>nc",
-        function()
-          require("package-info").change_version()
-        end,
-        desc = "Change version package info",
-        silent = true,
-        noremap = true,
-      },
-      {
-        "<leader>ns",
-        function()
-          require("package-info").show({ force = true })
-        end,
-        desc = "Show Package Info",
-        silent = true,
-        noremap = true,
-      },
-    },
-  },
-
-  -- LSP-CONFIG
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        astro = {},
-        -- yamlls = {
-        --   settings = {
-        --     yaml = {
-        --       keyOrdering = false,
-        --     },
-        --   },
-        -- },
-      },
-    },
-  },
-
   -- Nvim Cmp
   {
     "hrsh7th/nvim-cmp",
@@ -83,25 +22,6 @@ return {
           select = true,
         }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       })
-    end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(
-          opts.ensure_installed,
-          { "typescript", "tsx", "php", "astro", "markdown", "markdown_inline", "ruby", "sql", "rust", "regex" }
-        )
-      end
-    end,
-  },
-  { "jose-elias-alvarez/typescript.nvim" },
-  {
-    "andymass/vim-matchup",
-    event = "BufReadPost",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
   },
 

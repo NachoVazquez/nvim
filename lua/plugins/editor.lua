@@ -1,15 +1,6 @@
 return {
   -- colorizer
   {
-    "NvChad/nvim-colorizer.lua",
-    event = "BufReadPre",
-    opts = {
-      filetypes = { "*", "!lazy" },
-      buftype = { "*", "!prompt", "!nofile" },
-      user_default_options = {},
-    },
-  },
-  {
     "echasnovski/mini.surround",
     opts = {
       mappings = {
@@ -63,30 +54,11 @@ return {
     "mbbill/undotree",
   },
   {
-    "karb94/neoscroll.nvim",
-  },
-  {
     "https://github.com/adelarsq/image_preview.nvim",
     event = "VeryLazy",
     config = function()
       require("image_preview").setup()
     end,
-  },
-  {
-    "folke/flash.nvim",
-    enabled = false,
-    -- keys = function()
-    --   return {
-    --     {
-    --       "S",
-    --       mode = { "n", "x", "o" },
-    --       function()
-    --         require("flash").jump()
-    --       end,
-    --       desc = "Flash",
-    --     },
-    --   }
-    -- end,
   },
   {
     "MagicDuck/grug-far.nvim",
