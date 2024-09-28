@@ -1,5 +1,4 @@
 return {
-
   -- Package Info
   {
     "vuki656/package-info.nvim",
@@ -106,9 +105,9 @@ return {
     end,
   },
 
-  -- {
-  --   "f-person/git-blame.nvim",
-  -- },
+  {
+    "f-person/git-blame.nvim",
+  },
   -- Database
   {
     "tpope/vim-dadbod",

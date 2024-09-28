@@ -108,4 +108,11 @@ return {
       },
     },
   },
+  {
+    "ibhagwan/fzf-lua",
+    keys = {
+      { "<leader>sf", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>gc", false },
+    },
+  },
 }
