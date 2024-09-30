@@ -46,16 +46,31 @@ return {
       local function install_dependencies(wt_path)
         print("Installing dependencies")
 
-        local install_dependencies_job = Job:new({
-          command = get_package_manager(wt_path),
-          args = { "install" },
+        -- Run nvm use
+        local nvm_use_job = Job:new({
+          command = "nvm",
+          args = { "use" },
           cwd = wt_path,
           on_exit = function(j, return_val)
-            print("Installed dependencies")
+            if return_val == 0 then
+              print("nvm use successful")
+              -- Now install dependencies
+              local install_dependencies_job = Job:new({
+                command = get_package_manager(wt_path),
+                args = { "install" },
+                cwd = wt_path,
+                on_exit = function(j, return_val)
+                  print("Installed dependencies")
+                end,
+              })
+              install_dependencies_job:start()
+            else
+              print("nvm use failed")
+            end
           end,
         })
 
-        install_dependencies_job:start()
+        nvm_use_job:start()
       end
 
       local function create_env_file(wt_path)
