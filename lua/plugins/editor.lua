@@ -27,6 +27,18 @@ return {
     },
     keys = { { "<leader>zz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
+  {
+    "ellisonleao/glow.nvim",
+    config = true,
+    cmd = "Glow",
+    keys = {
+      {
+        "<leader>om",
+        "<cmd>Glow<cr>",
+        desc = "Glow (Markdown Preview)",
+      },
+    },
+  },
   -- markdown preview
   {
     "toppair/peek.nvim",
