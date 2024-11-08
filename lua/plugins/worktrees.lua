@@ -48,7 +48,7 @@ return {
 
         -- Run nvm use
         local nvm_use_job = Job:new({
-          command = "nvm",
+          command = "fnm",
           args = { "use" },
           cwd = wt_path,
           on_exit = function(j, return_val)
