@@ -14,6 +14,13 @@ return {
       },
     },
   },
+  -- disable animation
+  {
+    "snacks.nvim",
+    opts = {
+      scroll = { enabled = false },
+    },
+  },
   "folke/twilight.nvim",
   {
     "folke/zen-mode.nvim",
