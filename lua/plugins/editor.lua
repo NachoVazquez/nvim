@@ -20,6 +20,10 @@ return {
     opts = {
       scroll = { enabled = false },
     },
+    keys = {
+      { "<leader>sf", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>sg", LazyVim.pick("grep"), desc = "Grep (Root Dir)" },
+    },
   },
   "folke/twilight.nvim",
   {
@@ -87,7 +91,7 @@ return {
         function()
           local grug = require("grug-far")
           local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-          grug.grug_far({
+          grug.open({
             transient = true,
             prefills = {
               filesFilter = ext and ext ~= "" and "*." .. ext or nil,
@@ -97,13 +101,6 @@ return {
         mode = { "n", "v" },
         desc = "Search and Replace",
       },
-    },
-  },
-  {
-    "ibhagwan/fzf-lua",
-    keys = {
-      { "<leader>sf", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
-      { "<leader>gc", false },
     },
   },
 }

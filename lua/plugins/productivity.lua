@@ -5,7 +5,7 @@ return {
     opts = {
       dir = "~/Documents/mind-map/",
       completion = {
-        nvim_cmp = true,
+        -- nvim_cmp = true,
       },
       daily_notes = {
         folder = "journal",
