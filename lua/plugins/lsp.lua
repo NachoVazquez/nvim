@@ -55,7 +55,6 @@ return {
         "svelte-language-server",
         "tailwindcss-language-server",
         "taplo",
-        "teal-language-server",
         "terraform-ls",
         "tflint",
         "typescript-language-server",

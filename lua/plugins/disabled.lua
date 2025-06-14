@@ -6,4 +6,11 @@ return {
     "folke/flash.nvim",
     enabled = false,
   },
+  -- Disable just the <leader>gc keybinding from gitsigns
+  {
+    "lewis6991/gitsigns.nvim",
+    keys = {
+      { "<leader>gc", false },
+    },
+  },
 }
