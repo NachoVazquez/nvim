@@ -1,7 +1,7 @@
 return {
   -- tools
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "alex",
@@ -12,6 +12,7 @@ return {
         "black",
         "clangd",
         "codelldb",
+        "copilot-language-server",
         "css-lsp",
         "delve",
         "docker-compose-language-service",
