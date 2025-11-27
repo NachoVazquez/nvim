@@ -5,7 +5,6 @@ return {
     opts = {
       ensure_installed = {
         "alex",
-        "angular-language-server",
         "ansible-language-server",
         "astro-language-server",
         "bash-language-server",
@@ -73,14 +72,13 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      inlay_hints = {
-        enabled = false,
+      servers = {
+        ["*"] = {
+          keys = {
+            { "<leader>f", "<cmd>lua require('conform').format()<CR>", has = "format", desc = "Format" },
+          },
+        },
       },
     },
-    init = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-
-      keys[#keys + 1] = { "<leader>f", require("conform").format, desc = "Format", has = "format" }
-    end,
   },
 }
