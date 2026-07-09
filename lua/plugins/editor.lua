@@ -73,6 +73,12 @@ return {
   {
     "tpope/vim-abolish",
   },
+  -- refactoring.nvim depends on lewis6991/async.nvim since its recent rewrite,
+  -- but the LazyVim extra (extras.editor.refactoring) doesn't declare it yet.
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = { "lewis6991/async.nvim" },
+  },
   {
     "mbbill/undotree",
   },
