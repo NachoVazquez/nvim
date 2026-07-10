@@ -14,28 +14,6 @@ return {
     "f-person/git-blame.nvim",
   },
   {
-    "benomahony/uv.nvim",
-    opts = {
-      picker_integration = true, -- Enable UI picker integration if you have one
-    },
-  },
-  {
-    "stevearc/conform.nvim",
-    optional = true,
-    opts = {
-      formatters_by_ft = {
-        python = {
-          -- To fix auto-fixable lint errors.
-          "ruff_fix",
-          -- To run the Ruff formatter.
-          "ruff_format",
-          -- To organize the imports.
-          "ruff_organize_imports",
-        },
-      },
-    },
-  },
-  {
     "folke/sidekick.nvim",
     opts = {
       -- add any options here
