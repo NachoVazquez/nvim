@@ -1,3 +1,16 @@
+-- Run the current file with an explicit neotest adapter (IDs look like
+-- "neotest-bun:/path/to/project-root").
+local function run_file_with(adapter_prefix)
+  local neotest = require("neotest")
+  for _, id in ipairs(neotest.state.adapter_ids()) do
+    if vim.startswith(id, adapter_prefix) then
+      neotest.run.run({ vim.fn.expand("%"), adapter = id })
+      return
+    end
+  end
+  vim.notify("No active " .. adapter_prefix .. " adapter in this project", vim.log.levels.WARN)
+end
+
 return {
   {
     "nvim-neotest/neotest",
@@ -11,67 +24,21 @@ return {
         ["neotest-bun"] = {},
       },
     },
-    keys = function(_, keys)
-      -- Add our custom keys
-      local custom_keys = {
-        -- Force bun adapter by temporarily using only bun
-        {
-          "<leader>tb",
-          function()
-            local neotest = require("neotest")
-            -- Reconfigure with only bun adapter
-            neotest.setup({
-              adapters = {
-                require("neotest-bun")({
-                  cwd = function(path)
-                    return require("neotest.lib").files.match_root_pattern("package.json")(path)
-                  end,
-                }),
-              },
-            })
-            -- Run test
-            neotest.run.run(vim.fn.expand("%"))
-            -- Restore both adapters
-            vim.defer_fn(function()
-              neotest.setup({
-                adapters = {
-                  ["neotest-vitest"] = {},
-                  ["neotest-bun"] = {},
-                },
-              })
-            end, 100)
-          end,
-          desc = "Run File with Bun",
-        },
-        -- Force vitest adapter
-        {
-          "<leader>tv",
-          function()
-            local neotest = require("neotest")
-            -- Reconfigure with only vitest adapter
-            neotest.setup({
-              adapters = {
-                ["neotest-vitest"] = {},
-              },
-            })
-            -- Run test
-            neotest.run.run(vim.fn.expand("%"))
-            -- Restore both adapters
-            vim.defer_fn(function()
-              neotest.setup({
-                adapters = {
-                  ["neotest-vitest"] = {},
-                  ["neotest-bun"] = {},
-                },
-              })
-            end, 100)
-          end,
-          desc = "Run File with Vitest",
-        },
-      }
-      
-      -- Merge with existing keys (if any)
-      return vim.list_extend(keys or {}, custom_keys)
-    end,
+    keys = {
+      {
+        "<leader>tb",
+        function()
+          run_file_with("neotest-bun")
+        end,
+        desc = "Run File with Bun",
+      },
+      {
+        "<leader>tv",
+        function()
+          run_file_with("neotest-vitest")
+        end,
+        desc = "Run File with Vitest",
+      },
+    },
   },
 }
