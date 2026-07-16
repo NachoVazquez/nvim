@@ -16,10 +16,18 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<cr>", "ciw")
 vim.keymap.set("n", "<bs>", "diw")
 
-vim.keymap.set("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "Navigate left" })
-vim.keymap.set("n", "<C-w>j", "<cmd> TmuxNavigateDown<CR>", { desc = "Navigate down" })
-vim.keymap.set("n", "<C-w>k", "<cmd> TmuxNavigateUp<CR>", { desc = "Navigate up" })
-vim.keymap.set("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Navigate right" })
+-- <C-h/j/k/l>: vim-herdr-navigation (Herdr panes + Neovim splits; tmux fallback).
+-- Loaded here on VeryLazy so these win over LazyVim's default window maps.
+do
+  local matches = vim.fn.glob(
+    vim.fn.expand("~/.config/herdr/plugins/github/vim-herdr-navigation-*/editor/nvim.lua"),
+    false,
+    true
+  )
+  if matches[1] then
+    dofile(matches[1])
+  end
+end
 
 vim.keymap.set({ "n", "v" }, "<leader>f", function()
   LazyVim.format({ force = true })
